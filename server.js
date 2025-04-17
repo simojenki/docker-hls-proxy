@@ -21,6 +21,7 @@ app.get('/stream.flac', (req, res) => {
     '-i', inputUrl,
     '-vn',
     '-acodec', 'flac',
+    '-sample_fmt', 's16',
     '-f', 'flac',
     '-bufsize', '2M',          // output buffer size
     '-flush_packets', '0', 
