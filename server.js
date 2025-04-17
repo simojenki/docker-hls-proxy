@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.get('/stream.flac', (req, res) => {
+app.get('/stream.aac', (req, res) => {
   const inputUrl = req.query.url;
 
   if (!inputUrl) {
@@ -14,17 +14,18 @@ app.get('/stream.flac', (req, res) => {
   console.log(`Client connected, starting ffmpeg for URL: ${inputUrl}`);
 
   // Set correct content type
-  res.setHeader('Content-Type', 'audio/flac');
+  res.setHeader('Content-Type', 'audio/aac');
 
   const ffmpeg = spawn('ffmpeg', [
     '-re',
     '-i', inputUrl,
     '-vn',
-    '-acodec', 'flac',
-    '-sample_fmt', 's16',
-    '-f', 'flac',
-    '-bufsize', '2M',          // output buffer size
-    '-flush_packets', '0', 
+    '-acodec', 'aac',
+    '-b:a', '320k',           // Set AAC bitrate
+    '-ar', '44100',           // Sample rate
+    '-ac', '2',               // Stereo
+    '-sample_fmt', 's16',     // Force input to 16-bit PCM before encoding
+    '-f', 'adts',             // Output AAC in raw ADTS format
     'pipe:1'
   ]);
 
@@ -47,5 +48,5 @@ app.get('/stream.flac', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`FLAC proxy running at http://localhost:${PORT}/stream.flac?url=<HLS_URL>`);
+  console.log(`AAC proxy running at http://localhost:${PORT}/stream.aac?url=<HLS_URL>`);
 });
