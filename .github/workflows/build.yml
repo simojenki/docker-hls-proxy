@@ -27,4 +27,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: simojenki/hls-proxy:latest
+          tags: simojenki/hls2flac:latest
