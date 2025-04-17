@@ -24,7 +24,6 @@ app.get('/stream.aac', (req, res) => {
     '-b:a', '320k',           // Set AAC bitrate
     '-ar', '44100',           // Sample rate
     '-ac', '2',               // Stereo
-    '-sample_fmt', 's16',     // Force input to 16-bit PCM before encoding
     '-f', 'adts',             // Output AAC in raw ADTS format
     'pipe:1'
   ]);
