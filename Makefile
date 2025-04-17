@@ -10,6 +10,7 @@ image:
 run: image
 	docker run \
 		-it \
+		-p 3000:3000 \
 		--rm \
 		--name hls-proxy \
 		simojenki/hls-proxy

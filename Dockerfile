@@ -1,5 +1,11 @@
 FROM node:22-alpine
 
-RUN npm install --global "@warren-bank/hls-proxy"
+RUN mkdir /app
+WORKDIR /app
 
-ENTRYPOINT [ "hlsd" ]
+RUN apk add ffmpeg && \
+    npm install "express"
+
+COPY server.js /app/server.js
+
+ENTRYPOINT [ "node", "/app/server.js" ]
